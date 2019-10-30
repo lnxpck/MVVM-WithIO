@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepositoryListCell" id="YNA-Hi-Xeh" customClass="RepositoryListCell" customModule="MVVM_WithIO" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YNA-Hi-Xeh" id="Myg-R2-0Uf">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="103.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skH-jr-mhU">
+                        <rect key="frame" x="28" y="8" width="358" height="24"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⭐️ 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJw-Gc-GI3">
+                        <rect key="frame" x="28" y="74.5" width="358" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="100" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j30-GE-VKA">
+                        <rect key="frame" x="28" y="40" width="358" height="26.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="leadingMargin" secondItem="skH-jr-mhU" secondAttribute="leading" constant="-8" id="1bn-oB-bMo"/>
+                    <constraint firstItem="j30-GE-VKA" firstAttribute="top" secondItem="skH-jr-mhU" secondAttribute="bottom" constant="8" id="6VG-aM-KBB"/>
+                    <constraint firstItem="UJw-Gc-GI3" firstAttribute="leading" secondItem="j30-GE-VKA" secondAttribute="leading" id="7FX-7L-6mb"/>
+                    <constraint firstItem="UJw-Gc-GI3" firstAttribute="trailing" secondItem="j30-GE-VKA" secondAttribute="trailing" id="AiH-LE-sOS"/>
+                    <constraint firstItem="j30-GE-VKA" firstAttribute="trailing" secondItem="skH-jr-mhU" secondAttribute="trailing" id="G18-of-J6p"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="skH-jr-mhU" secondAttribute="trailing" constant="8" id="Gs9-rK-S6J"/>
+                    <constraint firstItem="UJw-Gc-GI3" firstAttribute="top" secondItem="j30-GE-VKA" secondAttribute="bottom" constant="8" id="Isv-2q-n5e"/>
+                    <constraint firstItem="j30-GE-VKA" firstAttribute="leading" secondItem="skH-jr-mhU" secondAttribute="leading" id="hmp-qe-MCo"/>
+                    <constraint firstAttribute="bottom" secondItem="UJw-Gc-GI3" secondAttribute="bottom" constant="8" id="lyY-ux-MXW"/>
+                    <constraint firstAttribute="top" secondItem="skH-jr-mhU" secondAttribute="top" constant="-8" id="nPY-is-siU"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descriptionLabel" destination="j30-GE-VKA" id="H10-13-2F7"/>
+                <outlet property="nameLabel" destination="skH-jr-mhU" id="iVu-H9-UGM"/>
+                <outlet property="starsCountLabel" destination="UJw-Gc-GI3" id="LOz-fa-4gz"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
