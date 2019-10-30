@@ -29,6 +29,7 @@ class RepositoryListViewController: UIViewController {
         setupBindings()
 
         refreshControl.sendActions(for: .valueChanged)
+        viewModel.fetchCurrentLanguage()
     }
 
     private func setupUI() {
@@ -37,7 +38,6 @@ class RepositoryListViewController: UIViewController {
         tableView.estimatedRowHeight = 100
         tableView.insertSubview(refreshControl, at: 0)
         tableView.register(UINib(nibName: "RepositoryListCell", bundle: nil), forCellReuseIdentifier: "RepositoryListCell")
-
     }
 
     private func setupBindings() {
@@ -85,6 +85,7 @@ class RepositoryListViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.outputs.alertMessage
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 self?.presentAlert(message: $0)
             })

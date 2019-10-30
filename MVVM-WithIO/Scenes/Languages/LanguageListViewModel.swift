@@ -15,8 +15,8 @@ protocol  LanguageListViewModelInput {
 
 protocol  LanguageListViewModelOutput {
     var languages: Observable<[String]> { get }
-    var didSelectLanguage: Observable<String> { get }
-    var didCancel: Observable<Void> { get }
+    var didSelectLanguage: PublishSubject<String> { get }
+    var didCancel: PublishSubject<Void> { get }
 }
 
 protocol  LanguageListViewModelType {
@@ -34,31 +34,21 @@ class LanguageListViewModel: LanguageListViewModelInput, LanguageListViewModelOu
     // MARK: - Inputs
     
     func selectLanguage(language: String) {
-        self._selectLanguage.onNext(language)
+        self.didSelectLanguage.onNext(language)
     }
     
     func cancel() {
-        self._cancel.onNext(Void())
+        self.didCancel.onNext(Void())
     }
 
     // MARK: - Outputs
     
     var languages: Observable<[String]>
-    var didSelectLanguage: Observable<String>
-    var didCancel: Observable<Void>
+    var didSelectLanguage: PublishSubject<String> = PublishSubject<String>()
+    var didCancel: PublishSubject<Void> = PublishSubject<Void>()
     
-    // MARK: Private
-    private let _selectLanguage: PublishSubject<String>
-    private let _cancel: PublishSubject<Void>
     
     init(githubService: GithubService = GithubService()) {
-        
         self.languages = githubService.getLanguageList()
-
-        self._selectLanguage = PublishSubject<String>()
-        self.didSelectLanguage = _selectLanguage.asObservable()
-
-        self._cancel = PublishSubject<Void>()
-        self.didCancel = _cancel.asObservable()
     }
 }
