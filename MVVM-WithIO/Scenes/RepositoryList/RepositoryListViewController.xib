@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RepositoryListViewController" customModule="MVVM_WithIO" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="Lql-KN-UYK" id="eyz-2k-eVt"/>
                 <outlet property="tableView" destination="f3X-Wb-dkw" id="Wnt-qe-4zO"/>
                 <outlet property="view" destination="REu-3W-69p" id="Igs-Ge-iDn"/>
             </connections>
@@ -21,10 +22,13 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="104" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f3X-Wb-dkw">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="104" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f3X-Wb-dkw">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Lql-KN-UYK">
+                    <rect key="frame" x="197" y="438" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -33,7 +37,9 @@
                 <constraint firstAttribute="bottom" secondItem="f3X-Wb-dkw" secondAttribute="bottom" id="MeR-87-U5y"/>
                 <constraint firstAttribute="trailing" secondItem="f3X-Wb-dkw" secondAttribute="trailing" id="bEt-Qg-sZf"/>
                 <constraint firstItem="f3X-Wb-dkw" firstAttribute="top" secondItem="REu-3W-69p" secondAttribute="top" id="hRs-YU-lgz"/>
+                <constraint firstItem="Lql-KN-UYK" firstAttribute="centerX" secondItem="REu-3W-69p" secondAttribute="centerX" id="jGF-gR-fLw"/>
                 <constraint firstItem="f3X-Wb-dkw" firstAttribute="trailing" secondItem="qZk-4N-WOd" secondAttribute="trailing" id="qN7-K7-puF"/>
+                <constraint firstItem="Lql-KN-UYK" firstAttribute="centerY" secondItem="REu-3W-69p" secondAttribute="centerY" id="zq3-eD-YGS"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="qZk-4N-WOd"/>
             <point key="canvasLocation" x="624.63768115942037" y="134.59821428571428"/>

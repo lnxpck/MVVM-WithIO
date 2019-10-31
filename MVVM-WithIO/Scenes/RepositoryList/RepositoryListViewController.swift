@@ -14,7 +14,8 @@ import SafariServices
 class RepositoryListViewController: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
-
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
     var viewModel: RepositoryListViewModel! = RepositoryListViewModel(initialLanguage: "Swift")
     
     private let chooseLanguageButton = UIBarButtonItem(barButtonSystemItem: .organize, target: nil, action: nil)
@@ -61,8 +62,13 @@ class RepositoryListViewController: UIViewController {
                 self?.viewModel.inputs.displayRepository(repo: repo)
             })
             .disposed(by: disposeBag)
-        
+
         // View Model outputs to the View Controller
+
+        viewModel.outputs.activityIndicator
+            .observeOn(MainScheduler.instance)
+            .bind(to: activityIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
         
         viewModel.outputs.repositories
             .observeOn(MainScheduler.instance)

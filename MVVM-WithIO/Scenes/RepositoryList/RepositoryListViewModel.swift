@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 protocol RepositoryListViewModelInput {
 
@@ -23,6 +24,7 @@ protocol RepositoryListViewModelOutput {
     var showRepository: PublishSubject<URL> { get } // Emits an url of repository page to be shown.
     var showLanguageList: PublishSubject<Void> { get } // Emits when we should show language list.
     var title: Observable<String> { get } // Emits a formatted title for a navigation item.
+    var activityIndicator: Observable<Bool> { get }
 }
 
 protocol RepositoryListViewModelType {
@@ -44,11 +46,13 @@ class RepositoryListViewModel: RepositoryListViewModelInput, RepositoryListViewM
     var showRepository: PublishSubject<URL> = PublishSubject<URL>()
     var showLanguageList: PublishSubject<Void> = PublishSubject<Void>()
     var title: Observable<String>
+    var activityIndicator: Observable<Bool>
 
     // MARK: Private
     
     private var githubService: GithubService!
     private var _currentLanguage: BehaviorSubject<String>
+    private var _activityIndicator: ActivityIndicator
     private let disposeBag = DisposeBag()
     
     // MARK: Init
@@ -59,6 +63,9 @@ class RepositoryListViewModel: RepositoryListViewModelInput, RepositoryListViewM
         
         self._currentLanguage = BehaviorSubject<String>(value: initialLanguage)
         self.title = self._currentLanguage.asObservable().map { "\($0)" }
+        
+        self._activityIndicator = ActivityIndicator()
+        self.activityIndicator = self._activityIndicator.asObservable()
         
 //        self.repositories
 //            .asObservable()
@@ -77,8 +84,10 @@ class RepositoryListViewModel: RepositoryListViewModelInput, RepositoryListViewM
     func fetchForLanguage(language: String) {
 
         self._currentLanguage.onNext(language)
-
+        self.repositories.onNext([])
+        
         githubService.getMostPopularRepositories(byLanguage: language)
+            .trackActivity(self._activityIndicator)
             .asObservable()
             .catchError { error in
                 self.alertMessage.onNext(error.localizedDescription)

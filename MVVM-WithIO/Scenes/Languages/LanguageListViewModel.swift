@@ -8,12 +8,12 @@
 
 import RxSwift
 
-protocol  LanguageListViewModelInput {
+protocol LanguageListViewModelInput {
     func selectLanguage(language: String)
     func cancel()
 }
 
-protocol  LanguageListViewModelOutput {
+protocol LanguageListViewModelOutput {
     var languages: Observable<[String]> { get }
     var didSelectLanguage: PublishSubject<String> { get }
     var didCancel: PublishSubject<Void> { get }
