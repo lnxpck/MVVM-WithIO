@@ -14,7 +14,8 @@ import SafariServices
 class RepositoryListViewController: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
-
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
     var viewModel: RepositoryListViewModel! = RepositoryListViewModel(initialLanguage: "Swift")
     
     private let chooseLanguageButton = UIBarButtonItem(barButtonSystemItem: .organize, target: nil, action: nil)
@@ -29,6 +30,7 @@ class RepositoryListViewController: UIViewController {
         setupBindings()
 
         refreshControl.sendActions(for: .valueChanged)
+        viewModel.fetchCurrentLanguage()
     }
 
     private func setupUI() {
@@ -37,7 +39,6 @@ class RepositoryListViewController: UIViewController {
         tableView.estimatedRowHeight = 100
         tableView.insertSubview(refreshControl, at: 0)
         tableView.register(UINib(nibName: "RepositoryListCell", bundle: nil), forCellReuseIdentifier: "RepositoryListCell")
-
     }
 
     private func setupBindings() {
@@ -61,8 +62,13 @@ class RepositoryListViewController: UIViewController {
                 self?.viewModel.inputs.displayRepository(repo: repo)
             })
             .disposed(by: disposeBag)
-        
+
         // View Model outputs to the View Controller
+
+        viewModel.outputs.activityIndicator
+            .observeOn(MainScheduler.instance)
+            .bind(to: activityIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
         
         viewModel.outputs.repositories
             .observeOn(MainScheduler.instance)
@@ -85,6 +91,7 @@ class RepositoryListViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.outputs.alertMessage
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 self?.presentAlert(message: $0)
             })

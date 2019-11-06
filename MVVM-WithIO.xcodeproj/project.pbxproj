@@ -21,6 +21,7 @@
 		CD9A176E2366FC7900106922 /* RepositoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9A176C2366FC7900106922 /* RepositoryListCell.swift */; };
 		CD9A176F2366FC7900106922 /* RepositoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD9A176D2366FC7900106922 /* RepositoryListCell.xib */; };
 		CD9A17712369BF4F00106922 /* LanguageListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD9A17702369BF4F00106922 /* LanguageListViewController.xib */; };
+		CD9A1779236A562900106922 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9A1778236A562900106922 /* ActivityIndicator.swift */; };
 		E365B437DECE1E20945855FE /* Pods_MVVM_WithIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C154D9EE5868A85E4FBE8ECC /* Pods_MVVM_WithIO.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		CD9A176C2366FC7900106922 /* RepositoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListCell.swift; sourceTree = "<group>"; };
 		CD9A176D2366FC7900106922 /* RepositoryListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepositoryListCell.xib; sourceTree = "<group>"; };
 		CD9A17702369BF4F00106922 /* LanguageListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageListViewController.xib; sourceTree = "<group>"; };
+		CD9A1778236A562900106922 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 		CD9A172F2366F76A00106922 /* MVVM-WithIO */ = {
 			isa = PBXGroup;
 			children = (
+				CD9A1777236A561500106922 /* Helpers */,
 				CD9A173C2366F76C00106922 /* Info.plist */,
 				CD9A17302366F76A00106922 /* AppDelegate.swift */,
 				CD9A17492366F97400106922 /* Resources */,
@@ -169,6 +172,14 @@
 				CD9A176D2366FC7900106922 /* RepositoryListCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		CD9A1777236A561500106922 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CD9A1778236A562900106922 /* ActivityIndicator.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,6 +305,7 @@
 				CD9A17662366FA9500106922 /* LanguageListViewModel.swift in Sources */,
 				CD9A17652366FA9500106922 /* LanguageListViewController.swift in Sources */,
 				CD9A17602366FA8900106922 /* RepositoryViewModel.swift in Sources */,
+				CD9A1779236A562900106922 /* ActivityIndicator.swift in Sources */,
 				CD9A17312366F76A00106922 /* AppDelegate.swift in Sources */,
 				CD9A17452366F92900106922 /* GithubService.swift in Sources */,
 				CD9A17482366F94A00106922 /* Repository.swift in Sources */,

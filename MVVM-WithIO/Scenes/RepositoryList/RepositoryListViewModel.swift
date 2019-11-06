@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 protocol RepositoryListViewModelInput {
 
@@ -18,11 +19,12 @@ protocol RepositoryListViewModelInput {
 }
 
 protocol RepositoryListViewModelOutput {
-    var repositories: Observable<[RepositoryViewModel]> { get } // Emits an array of fetched repositories.
+    var repositories: PublishSubject<[RepositoryViewModel]> { get } // Emits an array of fetched repositories.
+    var alertMessage: PublishSubject<String> { get } // Emits an error messages to be shown.
+    var showRepository: PublishSubject<URL> { get } // Emits an url of repository page to be shown.
+    var showLanguageList: PublishSubject<Void> { get } // Emits when we should show language list.
     var title: Observable<String> { get } // Emits a formatted title for a navigation item.
-    var alertMessage: Observable<String> { get } // Emits an error messages to be shown.
-    var showRepository: Observable<URL> { get } // Emits an url of repository page to be shown.
-    var showLanguageList: Observable<Void> { get } // Emits when we should show language list.
+    var activityIndicator: Observable<Bool> { get }
 }
 
 protocol RepositoryListViewModelType {
@@ -39,22 +41,18 @@ class RepositoryListViewModel: RepositoryListViewModelInput, RepositoryListViewM
     
     // MARK: - Outputs
     
-    var repositories: Observable<[RepositoryViewModel]>
+    var repositories: PublishSubject<[RepositoryViewModel]> = PublishSubject<[RepositoryViewModel]>()
+    var alertMessage: PublishSubject<String> = PublishSubject<String>()
+    var showRepository: PublishSubject<URL> = PublishSubject<URL>()
+    var showLanguageList: PublishSubject<Void> = PublishSubject<Void>()
     var title: Observable<String>
-    var alertMessage: Observable<String>
-    
-    var showRepository: Observable<URL>
-    var showLanguageList: Observable<Void>
-    
+    var activityIndicator: Observable<Bool>
+
     // MARK: Private
     
     private var githubService: GithubService!
-
     private var _currentLanguage: BehaviorSubject<String>
-    private var _repositories: PublishSubject<[RepositoryViewModel]>
-    private var _alertMessage: PublishSubject<String>
-    private var _displayRepository: PublishSubject<RepositoryViewModel>
-    private var _displayLanguageList: PublishSubject<Void>
+    private var _activityIndicator: ActivityIndicator
     private let disposeBag = DisposeBag()
     
     // MARK: Init
@@ -66,19 +64,19 @@ class RepositoryListViewModel: RepositoryListViewModelInput, RepositoryListViewM
         self._currentLanguage = BehaviorSubject<String>(value: initialLanguage)
         self.title = self._currentLanguage.asObservable().map { "\($0)" }
         
-        self._repositories = PublishSubject<[RepositoryViewModel]>()
-        self.repositories = self._repositories.asObservable()
-
-        self._alertMessage = PublishSubject<String>()
-        self.alertMessage = self._alertMessage.asObserver()
+        self._activityIndicator = ActivityIndicator()
+        self.activityIndicator = self._activityIndicator.asObservable()
         
-        self._displayRepository = PublishSubject<RepositoryViewModel>()
-        self.showRepository = _displayRepository.asObservable().map { $0.url }
-
-        self._displayLanguageList = PublishSubject<Void>()
-        self.showLanguageList = self._displayLanguageList.asObserver()
-
-        self.fetchForLanguage(language: initialLanguage)
+//        self.repositories
+//            .asObservable()
+//            .map { repos in
+//                return repos.first
+//            }
+//            .subscribe(onNext: { repo in
+//                print("\(repo?.name)")
+//                
+//            })
+//            .disposed(by: disposeBag)
     }
     
     // MARK: - Inputs
@@ -86,28 +84,28 @@ class RepositoryListViewModel: RepositoryListViewModelInput, RepositoryListViewM
     func fetchForLanguage(language: String) {
 
         self._currentLanguage.onNext(language)
-
+        self.repositories.onNext([])
+        
         githubService.getMostPopularRepositories(byLanguage: language)
+            .trackActivity(self._activityIndicator)
             .asObservable()
             .catchError { error in
-                self._alertMessage.onNext(error.localizedDescription)
+                self.alertMessage.onNext(error.localizedDescription)
                 return Observable.empty()
             }
             .subscribe(onNext: { repositories in
                 let repo = repositories.map(RepositoryViewModel.init)
-                self._repositories.onNext(repo)
+                self.repositories.onNext(repo)
             })
             .disposed(by: disposeBag)
     }
     
     func displayRepository(repo : RepositoryViewModel) {
-        print("displayRepository : \(repo.name)")
-        self._displayRepository.onNext(repo)
+        self.showRepository.onNext(repo.url)
     }
     
     func displayLanguageList() {
-        print("displayLanguageList...")
-        self._displayLanguageList.onNext(Void())
+        self.showLanguageList.onNext(Void())
     }
     
     func fetchCurrentLanguage() {
